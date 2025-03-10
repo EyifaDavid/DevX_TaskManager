@@ -4,7 +4,9 @@ import { useNavigate } from 'react-router-dom';
 import Textbox from '../components/Textbox';
 import Button from '../components/Button';
 import devX from "../assets/images/devx.jpg";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useLoginMutation } from '../redux/slices/api/authApiSlice';
+import { setCredentials } from '../redux/slices/authSlice';
 
 
 const Login = () => {
@@ -12,13 +14,25 @@ const Login = () => {
     const {register,handleSubmit,formState:{errors},}= useForm();
     
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const [login ,{isLoading}]= useLoginMutation()
 
     const submitHandler =async (data)=>{
-        console.log("submit")
+        try{
+            const result = await login(data).unwrap();
+
+            dispatch(setCredentials(result))
+            navigate("/");
+            
+            console.log(result);
+        }catch(error){
+            console.log(error);
+            toast.error(error?.data?.message || error.message)
+        }
     }
 
     useEffect(()=>{
-        // user && navigate("/dashboard")
+     user && navigate("/dashboard")
     },[user]);
 
 
@@ -86,12 +100,13 @@ const Login = () => {
                         <span className='text-sm text-gray-500 hover:text-blue-600 hover:underline cursor-pointer'>
                             Forget Password?</span>
 
-                        <Button
+                        {isLoading ? (<Loading/>) :(
+                            <Button
                             type="submit"
                             label="submit"
                             className="w-full h-10 bg-blue-700 text-white rounded-full"
 
-                        />
+                        />)}
                        
                     </div>
 

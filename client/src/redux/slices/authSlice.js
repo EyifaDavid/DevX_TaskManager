@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const defaultAdmin = { id: 1, name: "Admin", role: "admin" };
+// const defaultAdmin = { id: 1, name: "Admin", role: "admin" };
 
 const initialState={
     user: localStorage.getItem('userInfo')? JSON.parse(localStorage.getItem('userInfo'))
-    : defaultAdmin,
+    : null,
 isSidebarOpen: false,
 };
 
