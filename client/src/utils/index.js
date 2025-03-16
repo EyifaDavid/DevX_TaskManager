@@ -25,13 +25,16 @@ export function dateFormatter(dateString) {
 }
 
 export function getInitials(fullName) {
-  const names = fullName.split(" ");
+  if (!fullName) return "?"; // Default if name is missing
 
-  const initials = names.slice(0, 2).map((name) => name[0].toUpperCase());
+  const names = fullName.trim().split(" ");
 
-  const initialsStr = initials.join("");
+  const initials = names
+    .filter((name) => name.length > 0) // Remove empty spaces
+    .slice(0, 2)
+    .map((name) => name[0].toUpperCase());
 
-  return initialsStr;
+  return initials.join("") || "?"; // If there's no valid character, return "?"
 }
 
 export const PRIOTITYSTYELS = {

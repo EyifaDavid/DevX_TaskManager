@@ -5,8 +5,10 @@ import { BiSolidMessageRounded } from "react-icons/bi";
 import { HiBellAlert } from "react-icons/hi2";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { Link } from "react-router-dom";
+import ViewNotification from "./task/viewNotification";
+import { useGetNotificationsQuery, useMarkNotiAsReadMutation } from "../redux/slices/api/userApiSlice";
 
-const data = [
+ const data = [
   {
     _id: "65c5bbf3787832cf99f28e6d",
     team: [
@@ -18,7 +20,7 @@ const data = [
     task: null,
     notiType: "alert",
     isRead: [],
-    createdAt: "2024-02-09T05:45:23.353Z",
+    createdAt: "2024-02-09T05:45:23.353Z", 
     updatedAt: "2024-02-09T05:45:23.353Z",
     __v: 0,
   },
@@ -54,11 +56,21 @@ const NotificationPanel = () => {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(null);
 
-  //  const { data, refetch } = useGetNotificationsQuery();
-  //  const [markAsRead] = useMarkNotiAsReadMutation();
+   const { data, refetch } = useGetNotificationsQuery();
+   const [markAsRead] = useMarkNotiAsReadMutation();
 
-  const readHandler = () => {};
-  const viewHandler = () => {};
+ 
+  const readHandler = async (type, id) => {
+    await markAsRead({type, id}).unwrap();
+
+    refetch();
+  };
+
+  const viewHandler = async (el) => {
+    setSelected(el);
+    readHandler("one",el._id);
+    setOpen(true);
+  }; 
 
   const callsToAction = [
     { name: "Cancel", href: "#", icon: "" },
@@ -144,6 +156,7 @@ const NotificationPanel = () => {
           </Popover.Panel>
         </Transition>
       </Popover>
+      <ViewNotification open={open} setOpen={setOpen} el={selected}/>
     </>
   );
 };

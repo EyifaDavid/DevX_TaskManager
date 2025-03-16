@@ -7,6 +7,8 @@ import devX from "../assets/images/devx.jpg";
 import { useDispatch, useSelector } from 'react-redux';
 import { useLoginMutation } from '../redux/slices/api/authApiSlice';
 import { setCredentials } from '../redux/slices/authSlice';
+import Loading from '../components/Loader';
+import { toast } from 'sonner';
 
 
 const Login = () => {
@@ -26,8 +28,8 @@ const Login = () => {
             
             console.log(result);
         }catch(error){
-            console.log(error);
-            toast.error(error?.data?.message || error.message)
+            console.log(err);
+            toast.error(err?.data?.message || err.message)
         }
     }
 
@@ -119,4 +121,6 @@ const Login = () => {
   )
 }
 
+
 export default Login
+

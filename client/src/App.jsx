@@ -22,7 +22,7 @@ function Layout (){
 
   console.log("User from Redux:", user);
 
-  return user && user.role === "admin" ? (
+  return user ? (
     <div className="w-full h-screen flex flex-col md:flex-row">
       <div className="w-1/5 h-screen bg-white sticky top-0 hidden md:block">
         <Sidebar/>
@@ -100,7 +100,7 @@ function App() {
     <main className='w-full min-h-screen bg-white'>
       <Routes>
         <Route element={<Layout />}>
-          <Route path='/' element={<Navigate to='/Dashboard' />}/>
+          <Route index path='/' element={<Navigate to='/dashboard' />}/>
           <Route path='/dashboard' element={<Dashboard/>}/>
           <Route path='/tasks' element={<Task/>}/>
           <Route path='/completed/:status' element={<Task/>}/>

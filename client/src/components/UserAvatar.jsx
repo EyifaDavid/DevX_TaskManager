@@ -7,6 +7,9 @@ import { useNavigate } from "react-router-dom"
 import { getInitials } from "../utils"
 import { useLogoutMutation } from "../redux/slices/api/authApiSlice"
 import { logout } from "../redux/slices/authSlice"
+import { toast } from "sonner"
+import AddUser from "./AddUser"
+import ChangePassword from "./ChangePassword"
 
 const UserAvatar = () => {
     const [open,setOpen] = useState(false);
@@ -15,22 +18,25 @@ const UserAvatar = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const [logoutUser]= useLogoutMutation
+    const [logoutUser]= useLogoutMutation()
     const logoutHandler = async () => {
       try{
         await logoutUser().unwrap();
-        dispatch(logout())
+        dispatch(logout());
+
+        navigate("/log-in");
       }catch(error){
-        toast.error("Spmething went wrong");
+        toast.error("Something went wrong");
       }
     };
 
 
   return (
+   <>
     <div>
     <Menu as="div" className="relative inline-block text-left">
         <div>
-            <MenuButton className="w-10 h-10 2x1:w-12 2xl:h-12 items-center justify-center rounded-full bg-blue-600">
+            <MenuButton className="w-12 h-10 2x1:w-12 2xl:h-12 items-center justify-center rounded-full bg-blue-600">
                 <span className="text-white font-semibold">
                 {getInitials(user?.name)}
                 </span>
@@ -89,7 +95,11 @@ const UserAvatar = () => {
 </Transition>
     </Menu>
 </div>
-  )
-}
+
+  <AddUser open= {open} setOpen={setOpen} userData={user }/>
+  <ChangePassword open={openPassword }setOpen={setOpenPassword}/>
+  </>
+  );
+};
 
 export default UserAvatar
