@@ -19,11 +19,7 @@ const app = express();
 
 app.use(
     cors({
-<<<<<<< HEAD
     origin:["http://localhost:3000","http://localhost:3001","https://devx-taskmanager.netlify.app",],
-=======
-    origin:["http://localhost:3000","http://localhost:3001","https://devx-taskmanager.netlify.app"],
->>>>>>> 1222d6a7cbdaebedfa3d3c0125476bb9c22482df
     methods: ["GET","POST","PUT","DELETE"],
     credentials: true,
 }));
