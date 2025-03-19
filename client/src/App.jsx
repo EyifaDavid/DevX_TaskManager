@@ -29,7 +29,7 @@ function Layout (){
       </div>
        <MobileSidebar/>
 
-       <div className="flex-1 Overflow-y-auto bg-blue-200">
+       <div className="flex-1 Overflow-y-auto bg-white">
         <Navbar/>
 
         <div className="p-4 2xl:px-10">
