@@ -28,8 +28,8 @@ const Login = () => {
             
             console.log(result);
         }catch(error){
-            console.log(err);
-            toast.error(err?.data?.message || err.message)
+            console.log(error);
+            toast.error(error?.data?.message || error.message)
         }
     }
 

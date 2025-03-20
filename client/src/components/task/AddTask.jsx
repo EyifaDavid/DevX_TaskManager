@@ -26,6 +26,7 @@ const AddTask = ({ open, setOpen, task }) => {
     stage:"",
     priority: "",
     assets:[],
+    
   };
 
   const {
@@ -76,6 +77,7 @@ const AddTask = ({ open, setOpen, task }) => {
 
       setTimeout(()=>{
         setOpen(false);
+        window.location.reload();
       },500);
     } catch (error) {
       console.log(error);

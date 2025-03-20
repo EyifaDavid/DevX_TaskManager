@@ -40,7 +40,8 @@ const AddUser = ({ open, setOpen, userData }) => {
         toast.success("New User added successfully")
       }
       setTimeout(()=>{
-        setOpen(false)
+        setOpen(false);
+        window.location.reload();
       }, 1500
       );
     } catch (error) {

@@ -6,6 +6,7 @@ import devX from "../assets/images/devx.jpg"
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { setOpenSidebar } from '../redux/slices/authSlice';
 import clsx from 'clsx';
+import DarkModeToggle from './darkModeToggle';
 
 const linkData=[
     {
@@ -88,12 +89,12 @@ const Sidebar = () => {
             }
         </div>
 
-        {/* <div className=''>
-        <button className='w-full flex gap-2 p-2 items-center text-lg text-gray-800'>
-          <MdSettings />
-          <span>Settings</span>
-        </button>
-        </div> */}
+        <nav className="p-4 bg-gray-100 dark:bg-gray-800">
+      <div className="container mx-auto flex justify-between items-center">
+        <h1 className="text-lg font-bold text-gray-900 dark:text-white">My App</h1>
+        <DarkModeToggle />
+      </div>
+    </nav>
     </div>
   )
 }
