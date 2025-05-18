@@ -26,16 +26,16 @@ app.use(
     
 }));
 
-app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "https://devx-taskmanager.netlify.app"); // Allow only frontend
-    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-    res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-    res.header("Access-Control-Allow-Credentials", "true"); // Allow cookies & auth
-    if (req.method === "OPTIONS") {
-        return res.sendStatus(200); // Respond to preflight request
-    }
-    next();
-});
+// app.use((req, res, next) => {
+//     res.header("Access-Control-Allow-Origin", "https://devx-taskmanager.netlify.app"); // Allow only frontend
+//     res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+//     res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+//     res.header("Access-Control-Allow-Credentials", "true"); // Allow cookies & auth
+//     if (req.method === "OPTIONS") {
+//         return res.sendStatus(200); // Respond to preflight request
+//     }
+//     next();
+// });
 
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));

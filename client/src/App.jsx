@@ -23,13 +23,13 @@ function Layout (){
   console.log("User from Redux:", user);
 
   return user ? (
-    <div className="w-full h-screen flex flex-col md:flex-row">
-      <div className="w-1/5 h-screen bg-white sticky top-0 hidden md:block">
+    <div className="w-full min-h-screen flex flex-col md:flex-row">
+      <div className="w-1/5 h-screen bg-white dark:bg-gray-800 sticky top-0 hidden md:block">
         <Sidebar/>
       </div>
        <MobileSidebar/>
 
-       <div className="flex-1 Overflow-y-auto bg-white">
+       <div className="flex-1 Overflow-y-auto bg-white dark:bg-gray-800">
         <Navbar/>
 
         <div className="p-4 2xl:px-10">
@@ -75,7 +75,7 @@ const MobileSidebar = ()=>{
       
       onClick={() => closeSidebar()}>
 
-        <div className="bg-white w-2/4 h-full"> 
+        <div className="bg-white dark:bg-gray-800 w-2/4 h-full"> 
           <div className="w-full flex justify-end px-5 mt-5"> 
             <button
             onClick={()=>closeSidebar()}

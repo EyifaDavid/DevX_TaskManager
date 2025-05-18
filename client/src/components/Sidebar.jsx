@@ -64,8 +64,8 @@ const Sidebar = () => {
     const NavLink =({el}) => {
         return(
             <Link to={el.link} onClick={closeSidebar}
-            className={clsx("w-full lg:w-3/4 flex gap-2 px-3 py-2 rounded-full items-center text-gray-800 text-base hover:bg-[#2564ed2d]",
-                path === el.link.split("/")[0] ? "bg-blue-700 text-white" : "not-only:"
+            className={clsx("w-full lg:w-3/4 flex gap-2 px-3 py-2 rounded-full items-center text-gray-800 dark:text-white text-base hover:bg-[#2564ed2d]",
+                path === el.link.split("/")[0] ? "bg-blue-700 text-white " : "not-only:"
             )}>
                 {el.icon}
                 <span className='hover:text-[#2564ed]'>{el.Label}</span>
@@ -78,7 +78,7 @@ const Sidebar = () => {
         <img src={devX}
         className=' p-2 rounded-full w-25'>
         </img>
-        <span className='text-2xl font-bold text-black'>Task Manager</span>
+        <span className='text-2xl font-bold text-black dark:text-white'>Task Manager</span>
         </h1>
         
         <div className='flex-1 flex-col gap-y-5 py-8'>
@@ -89,9 +89,9 @@ const Sidebar = () => {
             }
         </div>
 
-        <nav className="p-4 bg-gray-100 dark:bg-gray-800">
+        <nav className="p-4 bg-white dark:bg-gray-800">
       <div className="container mx-auto flex justify-between items-center">
-        <h1 className="text-lg font-bold text-gray-900 dark:text-white">My App</h1>
+        <h1 className="text-lg font-bold text-gray-900 dark:text-white">App theme</h1>
         <DarkModeToggle />
       </div>
     </nav>

@@ -170,7 +170,7 @@ const Trash = () => {
             <Button
               label='Restore All'
               icon={<MdOutlineRestore className='text-lg hidden md:flex' />}
-              className='flex flex-row-reverse gap-1 items-center  text-black text-sm md:text-base rounded-md 2xl:py-2.5'
+              className='flex flex-row-reverse gap-1 items-center dark:text-white text-black text-sm md:text-base rounded-md 2xl:py-2.5'
               onClick={() => restoreAllClick()}
             />
             <Button
