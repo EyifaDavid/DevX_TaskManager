@@ -24,6 +24,7 @@ const ICONS = {
 const TaskCard = ({ task }) => {
   const { user } = useSelector((state) => state.auth);
   const [open, setOpen] = useState(false);
+  const [selectedSubTask, setSelectedSubTask] = useState(null);
 
   return (
     <>
@@ -88,27 +89,32 @@ const TaskCard = ({ task }) => {
 
         {/* sub tasks */}
         {task?.subTasks?.length > 0 ? (
-          <div className='py-4 border-t border-gray-200'>
-            <h5 className='text-base line-clamp-1 text-black'>
-              {task?.subTasks[0].title}
-            </h5>
-
-            <div className='p-4 space-x-8'>
-              <span className='text-sm text-gray-600'>
-                {formatDate(new Date(task?.subTasks[0]?.date))}
-              </span>
-              <span className='bg-blue-600/10 px-3 py-1 rounded0full text-blue-700 font-medium'>
-                {task?.subTasks[0].tag}
-              </span>
-            </div>
+          <div className='py-4 border-t border-gray-200 space-y-2'>
+            {task.subTasks.map((subtask) => (
+              <div
+                key={subtask._id}
+                className='cursor-pointer p-2 rounded hover:bg-gray-50'
+                onClick={() => {
+                  setSelectedSubTask(subtask);
+                  setOpen(true);
+                }}
+              >
+                <h5 className='text-base text-black'>{subtask.title}</h5>
+                <div className='flex gap-4 text-sm text-gray-600'>
+                  <span>{formatDate(new Date(subtask.date))}</span>
+                  <span className='bg-blue-600/10 px-3 py-1 rounded-full text-blue-700 font-medium'>
+                    {subtask.tag}
+                  </span>
+                </div>
+              </div>
+            ))}
           </div>
         ) : (
-          <>
-            <div className='py-4 border-t border-gray-200'>
-              <span className='text-gray-500'>No Sub Task</span>
-            </div>
-          </>
+          <div className='py-4 border-t border-gray-200'>
+            <span className='text-gray-500'>No Sub Task</span>
+          </div>
         )}
+
 
         <div className='w-full pb-2'>
           <button
@@ -122,7 +128,15 @@ const TaskCard = ({ task }) => {
         </div>
       </div>
 
-      <AddSubTask open={open} setOpen={setOpen} id={task._id} />
+      <AddSubTask
+      //  open={open} setOpen={setOpen} id={task._id}
+       open={open}
+        setOpen={(val) => {
+          setOpen(val);
+          if (!val) setSelectedSubTask(null); // clear subtask when modal closes
+        }}
+        id={task._id}
+        subtask={selectedSubTask} />
     </>
   );
 };

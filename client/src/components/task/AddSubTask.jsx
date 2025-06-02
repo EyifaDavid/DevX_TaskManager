@@ -4,40 +4,67 @@ import { Dialog } from "@headlessui/react";
 import Textbox from "../Textbox";
 import Button from "../Button";
 import { toast } from "sonner";
-import { useCreateSubTaskMutation } from "../../redux/slices/api/taskApiSlice";
+import { useCreateSubTaskMutation, useUpdateSubTaskMutation } from "../../redux/slices/api/taskApiSlice";
+import { useEffect } from "react";
 
-const AddSubTask = ({ open, setOpen, id }) => {
+const AddSubTask = ({ open, setOpen, id, subtask = null }) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+    reset,
+  } = useForm({
+  defaultValues: {
+    title: subtask?.title || "",
+    date: subtask?.date || "",
+    tag: subtask?.tag || "",
+  },
+});
+
+    useEffect(() => {
+      reset({
+        title: subtask?.title || "",
+        date: subtask?.date || "",
+        tag: subtask?.tag || "",
+      });
+    }, [subtask, reset]);
 
   const [addSbTask] = useCreateSubTaskMutation();
+  const [updateSbTask] = useUpdateSubTaskMutation();
+  const isEditMode = Boolean(subtask && subtask._id);
 
-  const handleOnSubmit = async (data) => {
-    try {
-      const res = await addSbTask({ data, id }).unwrap();
-      toast.success(res.message);
-      setTimeout(() => {
-        setOpen(false);
-        window.location.reload();
-      }, 500);
-    } catch (err) {
-      console.log(err);
-      toast.error(err?.data?.message || err.error);
+const handleOnSubmit = async (data) => {
+  try {
+    let res;
+    if (isEditMode) {
+      // Edit mode
+      console.log("Updating subtask with ID:", subtask?._id);
+      res = await updateSbTask({ id: subtask._id, data}).unwrap();
+    } else {
+      // Add mode
+      res = await addSbTask({ data, id }).unwrap();
     }
-  };
+    toast.success(res.message);
+    setTimeout(() => {
+      setOpen(false);
+      window.location.reload(); // optional, but inefficient
+    }, 500);
+  } catch (err) {
+    console.log(err);
+    toast.error(err?.data?.message || err.error);
+  }
+};
+
 
   return (
     <>
       <ModalWrapper open={open} setOpen={setOpen}>
         <form onSubmit={handleSubmit(handleOnSubmit)} className=''>
-          <Dialog.Title
+                <Dialog.Title
             as='h2'
             className='text-base font-bold leading-6 text-gray-900 mb-4'
           >
-            ADD SUB-TASK
+            {subtask ? "EDIT SUB-TASK" : "ADD SUB-TASK"}
           </Dialog.Title>
           <div className='mt-2 flex flex-col gap-6'>
             <Textbox
@@ -81,7 +108,7 @@ const AddSubTask = ({ open, setOpen, id }) => {
             <Button
               type='submit'
               className='bg-blue-600 text-sm font-semibold text-white hover:bg-blue-700 sm:ml-3 sm:w-auto'
-              label='Add Task'
+              label={subtask ? "Update Task" : "Add Task"}
             />
 
             <Button

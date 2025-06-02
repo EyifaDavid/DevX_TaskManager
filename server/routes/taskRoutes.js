@@ -1,6 +1,6 @@
 import express from "express";
 import { isAdminRoute, protectRoute } from "../middleware/authMiddleware.js";
-import { createSubTask, createTask, dashboardStatistics, deleteRestoreTask, duplicateTask, getTask, getTasks, postTaskActivity, trashTask, updateTask } from "../controllers/taskController.js";
+import { createSubTask, createTask, dashboardStatistics, deleteRestoreTask, duplicateTask, getTask, getTasks, postTaskActivity, trashTask, updateSubTask, updateTask } from "../controllers/taskController.js";
 
 const router = express.Router();
 
@@ -13,6 +13,7 @@ router.get("/", protectRoute, getTasks);
 router.get("/:id", protectRoute, getTask);
 
 router.put("/create-subtask/:id",protectRoute,isAdminRoute,createSubTask);
+router.put('/update-subtask/:id',protectRoute,isAdminRoute,updateSubTask);
 router.put("/update/:id",protectRoute,isAdminRoute,updateTask);
 router.put("/:id",protectRoute,isAdminRoute,trashTask);
 

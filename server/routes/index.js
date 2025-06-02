@@ -7,7 +7,7 @@ const router = express.Router();
 
 
 
-router.use("/user",userRoutes); //api/user/login
+router.use("/user",userRoutes);
 router.use("/task",taskRoutes);
 
 export default router

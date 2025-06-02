@@ -54,42 +54,39 @@ const MobileSidebar = ()=>{
   }
 
   return(
-    <>
-     <Transition
-            show= {isSidebarOpen}
-            as={Fragment}
-            enter='transition-opacity duration-700'
-            enterFrom='opacity-x-10'
-            enterTo='opacity-x-100'
-            leave='transition-opacity duration-700'
-            leaveFrom='opacity-x-100'
-            leaveTo='opacity-x-0'
-          >
-     {(ref) => (
-      <div 
-      ref={(node)=> (mobileMenuRef.current=node)}
-      className={clsx(
-        "md:hidden w-full h-full bg-black/40 transition-all duration-700 transform"
-        , isSidebarOpen ? "translate-x-0": "translate-x-full"
-      )}
-      
-      onClick={() => closeSidebar()}>
+     <>
+    <Transition show={isSidebarOpen} as={Fragment}>
+  <div className="fixed inset-0 z-50 flex">
+    {/* Overlay */}
+    <div
+      className="fixed inset-0 bg-black/40"
+      onClick={closeSidebar}
+    />
 
-        <div className="bg-white dark:bg-gray-800 w-2/4 h-full"> 
-          <div className="w-full flex justify-end px-5 mt-5"> 
-            <button
-            onClick={()=>closeSidebar()}
-            className="flex justify-end items-end">
-              <IoMdClose size={25}/>
-            </button>
-          </div>
-          <div className="mt-10">
-            <Sidebar/>
-          </div>
+    {/* Sliding panel */}
+    <Transition.Child
+      as={Fragment}
+      enter="transition ease-in-out duration-300 transform"
+      enterFrom="-translate-x-full"
+      enterTo="translate-x-0"
+      leave="transition ease-in-out duration-300 transform"
+      leaveFrom="translate-x-0"
+      leaveTo="-translate-x-full"
+    >
+      <div
+        className="relative w-3/5 max-w-xs h-full bg-white dark:bg-gray-800 shadow-xl"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="flex justify-end p-4">
+          <button onClick={closeSidebar}>
+            <IoMdClose size={24} />
+          </button>
         </div>
+        <Sidebar />
       </div>
-     )}       
-          </Transition>
+    </Transition.Child>
+  </div>
+</Transition>
     </>
   )
 }

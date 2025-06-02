@@ -301,6 +301,36 @@ export const updateTask = async (req, res) => {
     return res.status(400).json({ status: false, message: error.message });
   }
 };
+export const updateSubTask = async (req, res) => {
+  try {
+    const { id } = req.params; // subtask ID
+    const { title, date, tag } = req.body;
+
+    // Find the task that contains the subtask
+    const task = await Task.findOne({ "subTasks._id": id });
+    if (!task) {
+      return res.status(404).json({ status: false, message: "SubTask not found in any task." });
+    }
+
+    // Find the subtask by ID and update its fields
+    const subTask = task.subTasks.id(id);
+    if (!subTask) {
+      return res.status(404).json({ status: false, message: "SubTask not found." });
+    }
+
+    subTask.title = title || subTask.title;
+    subTask.date = date || subTask.date;
+    subTask.tag = tag || subTask.tag;
+
+    await task.save();
+
+    res.status(200).json({ status: true, message: "SubTask updated successfully." });
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({ status: false, message: error.message });
+  }
+};
+
 
 export const trashTask = async (req, res) => {
   try {
